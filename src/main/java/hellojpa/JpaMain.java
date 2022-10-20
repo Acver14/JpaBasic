@@ -60,12 +60,18 @@ public class JpaMain {
 
 //            em.flush();   // 쓰기 지연 SQL에 있는 쿼리만 반영 - 1차 캐시가 비워지지 않음
 
-            Member member = em.find(Member.class, 150L);
-            member.setName("AAAAA");
+//            Member member = em.find(Member.class, 150L);
+//            member.setName("AAAAA");
+//
+//            em.detach(member);  // 해당 엔티티를 영속성 컨텍스트에서 관리하지 않도록 설정 -> 준영속 상태
+//            em.clear();         // 영속성 컨텍스트를 비움
 
-            em.detach(member);  // 해당 엔티티를 영속성 컨텍스트에서 관리하지 않도록 설정 -> 준영속 상태
-            em.clear();         // 영속성 컨텍스트를 비움
+            Member member = new Member();
+            member.setId(1L);
+            member.setUsername("A");
+            member.setRoleType(RoleType.USER);
 
+            em.persist(member);
             tx.commit();
         }catch (Exception e){
             tx.rollback();
