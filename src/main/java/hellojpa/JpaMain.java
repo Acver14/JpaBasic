@@ -67,8 +67,8 @@ public class JpaMain {
 //            em.clear();         // 영속성 컨텍스트를 비움
 
             Member member = new Member();
-            member.setId(1L);
-            member.setUsername("A");
+//            member.setId(1L);
+            member.setUsername("AC");
             member.setRoleType(RoleType.USER);
 
             em.persist(member);
