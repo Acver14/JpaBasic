@@ -66,12 +66,39 @@ public class JpaMain {
 //            em.detach(member);  // 해당 엔티티를 영속성 컨텍스트에서 관리하지 않도록 설정 -> 준영속 상태
 //            em.clear();         // 영속성 컨텍스트를 비움
 
-            Member member = new Member();
-//            member.setId(1L);
-            member.setUsername("AC");
-            member.setRoleType(RoleType.USER);
+//            Member member = new Member();
+////            member.setId(1L);
+//            member.setUsername("AC");
+//            member.setRoleType(RoleType.USER);
 
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+
+            // 연관관계 편의 메소드 택 1
+//            member.changeTeam(team);    // 연관관계 편의 메소드 vs setTeam(Team)
+            team.addMembers(member);
             em.persist(member);
+
+            // 객체지향적으로도, 안정성 측면에서도 양측 다 추가해주는 것이 좋다.
+            // 실수를 막기 위해 Member Class에 연관관게 편의 메소드를 생성하자.
+//            team.getMembers().add(member);
+//            em.flush();
+//            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+
+            Team findTeam = findMember.getTeam();
+            List<Member> members = findMember.getTeam().getMembers();
+            for (Member m : members){
+                System.out.println("m = " + m.getUsername());
+            }
+
+            System.out.println("findTeam = " + findTeam.getName());
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();

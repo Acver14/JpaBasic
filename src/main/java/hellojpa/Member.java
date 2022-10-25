@@ -13,30 +13,22 @@ import java.util.Date;
 //        pkColumnValue = "MEMBER_SEQ", allocationSize = 1
 //)
 public class Member {
+    public Member(){}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @GeneratedValue(strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR")
+    @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "name", length = 10)
+    @Column(name = "USERNAME")
     private String username;
-    private Integer age;
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-    // Temporal 필요 없음
-    private LocalDate testLocalDate;
-    private LocalDateTime testLocalDateTime;
-
-    @Lob
-    private String description;
-    @Transient
-    private int temp;
-    public Member(){}
+//    @Column(name = "TEAM_ID")
+//    private Long teamId;
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Long getId() {
         return id;
@@ -54,51 +46,44 @@ public class Member {
         this.username = username;
     }
 
-    public Integer getAge() {
-        return age;
+//    public Long getTeamId() {
+//        return teamId;
+//    }
+//
+//    public void setTeamId(Long teamId) {
+//        this.teamId = teamId;
+//    }
+
+    public Team getTeam() {
+        return team;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
-    public RoleType getRoleType() {
-        return roleType;
+    public void changeTeam(Team team) {
+        this.team = team;
+        // 연관관계 편의 메소드 생성
+        team.getMembers().add(this);
     }
 
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
-    }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+    //    private Integer age;
+//    @Enumerated(EnumType.STRING)
+//    private RoleType roleType;
+//
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date createDate;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date lastModifiedDate;
+//    // Temporal 필요 없음
+//    private LocalDate testLocalDate;
+//    private LocalDateTime testLocalDateTime;
+//
+//    @Lob
+//    private String description;
+//    @Transient
+//    private int temp;
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getTemp() {
-        return temp;
-    }
-
-    public void setTemp(int temp) {
-        this.temp = temp;
-    }
 }
