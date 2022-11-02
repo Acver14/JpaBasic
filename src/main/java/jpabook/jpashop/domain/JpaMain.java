@@ -2,6 +2,8 @@ package jpabook.jpashop.domain;
 
 import hellojpa.Member;
 import hellojpa.RoleType;
+import jpabook.jpashop.Order;
+import jpabook.jpashop.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,6 +21,8 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Order order = new Order();
+            order.addOrderItem(new OrderItem());
 
             tx.commit();
         }catch (Exception e){

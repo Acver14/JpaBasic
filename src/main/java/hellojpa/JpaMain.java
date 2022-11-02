@@ -71,17 +71,17 @@ public class JpaMain {
 //            member.setUsername("AC");
 //            member.setRoleType(RoleType.USER);
 
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
-
-            Member member = new Member();
-            member.setUsername("member1");
-
-            // 연관관계 편의 메소드 택 1
-//            member.changeTeam(team);    // 연관관계 편의 메소드 vs setTeam(Team)
-            team.addMembers(member);
-            em.persist(member);
+//            Team team = new Team();
+//            team.setName("TeamA");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("member1");
+//
+//            // 연관관계 편의 메소드 택 1
+////            member.changeTeam(team);    // 연관관계 편의 메소드 vs setTeam(Team)
+//            team.addMembers(member);
+//            em.persist(member);
 
             // 객체지향적으로도, 안정성 측면에서도 양측 다 추가해주는 것이 좋다.
             // 실수를 막기 위해 Member Class에 연관관게 편의 메소드를 생성하자.
@@ -89,15 +89,25 @@ public class JpaMain {
 //            em.flush();
 //            em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            Team findTeam = findMember.getTeam();
+//            List<Member> members = findMember.getTeam().getMembers();
+//            for (Member m : members){
+//                System.out.println("m = " + m.getUsername());
+//            }
+//
+//            System.out.println("findTeam = " + findTeam.getName());
 
-            Team findTeam = findMember.getTeam();
-            List<Member> members = findMember.getTeam().getMembers();
-            for (Member m : members){
-                System.out.println("m = " + m.getUsername());
-            }
 
-            System.out.println("findTeam = " + findTeam.getName());
+            Member member = new Member();
+            member.setUsername("member1");
+            em.persist(member);
+
+            Team team = new Team();
+            team.setName("teamA");
+            team.getMembers().add(member);
+            em.persist(team);
 
             tx.commit();
         }catch (Exception e){

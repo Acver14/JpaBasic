@@ -14,7 +14,10 @@ public class Team {
 
     private String name;
 
-    @OneToMany(mappedBy = "team")   // 읽기 전용 -> 이 값을 변경해도 디비에는 반영 X
+//    @OneToMany(mappedBy = "team")   // 읽기 전용 -> 이 값을 변경해도 디비에는 반영 X
+    @OneToMany
+//    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)    // 일대다 양반향 - 읽기 전용
+    @JoinColumn(name = "TEAM_ID")
     private List<Member> members = new ArrayList<>();
     public Long getId() {
         return id;
@@ -36,11 +39,11 @@ public class Team {
         return members;
     }
 
-    // 연관관계 편의 메소드
-    public void addMembers(Member member){
-        member.setTeam(this);
-        members.add(member);
-    }
+//    // 연관관계 편의 메소드
+//    public void addMembers(Member member){
+//        member.setTeam(this);
+//        members.add(member);
+//    }
     public void setMembers(List<Member> members) {
         this.members = members;
     }
