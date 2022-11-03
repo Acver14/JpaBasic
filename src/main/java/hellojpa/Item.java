@@ -1,20 +1,21 @@
-package jpabook.jpashop;
+package hellojpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
+import javax.persistence.*;
 
 @Entity
-public class Item {
-    @Id @GeneratedValue
-    @Column(name = "ITEM_ID")
+//@Inheritance(strategy = InheritanceType.JOINED)
+//@DiscriminatorColumn()
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)        // movie, album, book 세 테이블 모두 찾아봐야해서 비효율적, 고려대상 x
+public abstract class Item {
+
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
     private int price;
-    private int stockQuantity;
+
 
     public Long getId() {
         return id;
@@ -38,13 +39,5 @@ public class Item {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
     }
 }

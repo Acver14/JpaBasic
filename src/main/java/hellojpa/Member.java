@@ -14,7 +14,7 @@ import java.util.List;
 //        table = "MY_SEQUENCES",
 //        pkColumnValue = "MEMBER_SEQ", allocationSize = 1
 //)
-public class Member {
+public class Member extends BaseEntity {
     public Member(){}
 
     @Id
@@ -42,6 +42,8 @@ public class Member {
 //    @ManyToOne
 //    @JoinColumn(name = "TEAM_ID")
 //    private Team team;
+
+
 
     public Long getId() {
         return id;
